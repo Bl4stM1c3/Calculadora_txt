@@ -1,0 +1,78 @@
+#Posible solucion al ejercicio 22 de https://retosdeprogramacion.com/ejercicios/
+#Lee el fichero "Challenge21.txt" incluido en el proyecto, calcula su
+#  resultado e imprímelo.
+#  - El .txt se corresponde con las entradas de una calculadora.
+#  - Cada línea tendrá un número o una operación representada por un
+#    símbolo (alternando ambos).
+#  - Soporta números enteros y decimales.
+#  - Soporta las operaciones suma "+", resta "-", multiplicación "*"
+#    y división "/".
+#  - El resultado se muestra al finalizar la lectura de la última
+#    línea (si el .txt es correcto).
+#  - Si el formato del .txt no es correcto, se indicará que no se han
+#    podido resolver las operaciones.
+
+def calculadora(archivo):
+  """
+      Calcula el resultado de operaciones aritmeticas definidas en un archio externo
+  """
+  #Leemos el archivo linea por linea
+  try:
+      with open(archivo, 'r') as archivo:
+        lineas = [linea.strip() for linea in archivo if linea.strip()]
+  except FileNotFoundError:
+      print(f"ERROR!! Archivo {archivo} no encontrado")
+      return []
+
+  #Convertimos los numeros de string a float
+  lista = [float(i) if i.replace('.','',1).isdigit() else i for i in lineas]
+
+  #Funcion para verificar la validez del archivo introduciendo la lista extraida del mismo
+  def validar_archivo(lista):
+    if len(lista) % 2 == 0:
+      return f"El archivo '{archivo}' no posee una estructura aritmetica válida"
+
+    for i, j in enumerate(lista):
+      if i % 2 == 0 and not isisntace(j, (int,float)):
+        return f"El archivo '{archivo}' no posee una estructura aritmetica válida"
+      if i % 2 != 0 and j not in '+-*/':
+        return f"El archivo '{archivo}' no posee una estructura aritmetica válida"
+    return True
+
+  #Validamos el archivo
+  validacion = validar_archivo(lista)
+  if validacion != True
+    return validacion
+
+  #Operadores primarios * y /
+  i = 0
+  while i < len(lista):
+    if lista[i] == '*':
+      resultado = lista[i - 1] * lista[i + 1]
+      lista[i-1:i+2] = [resultado]
+      i = 0
+    elif lista[i] == '/':
+      try:
+        resultado = lista[i - 1] / lista[i + 1]
+      except ZeroDivisionError:
+        return "ERROR!!! Division entre 0 no ermitida"
+      lista[i-1:i+2] = [resultado]
+      i = 0
+    else:
+      i += 1
+
+  #Operadores secundrios + y -
+  i = 0
+  while i < len(lista):
+    if lista[i] == '+':
+      resultado = lista[i - 1] + lista[i + 1]
+      lista[i-1:i+2] = [resultado]
+      i = 0
+    elif lista[i] == '-':
+      resultado = lista[i - 1] + lista[i + 1]
+      lista[i-1:i+2] = [resultado]
+      i = 0
+    else:
+      i += 1
+  return lista[0]
+      
